@@ -24,51 +24,53 @@ var staticDir = 'build';
 //egy express szerver példány létrehozása
 const app = express()
 
-//statikus fájlok
-app.use(express.static(staticDir))
+// Statikus fájlok.
+app.use(express.static(staticDir));
 
-//Express use használata
 app.use(function (req, res, next) {
-    console.log('request.url: ',req.url);
+    console.log(req.url);
     next();
 });
 
-
-//definiáljuk a szerver működését
-app.get('/', (req, res, next) => {
-    fs.readFile('./' + staticDir + '/index.html', 'utf8', (err, data) => {
-        if (err) throw err;
+// Definiáljuk a szerver működését.
+app.get('/', function (req, res) {
+    fs.readFile('./' + staticDir + '/index.html', 'utf8', function (err, data) {
         res.send(data);
     });
 });
 
-
-//egy felhasználót visszaadó fv
+// Falhasználó modell.
 function handleUsers(req, res) {
-    fs.readFile("./users.json", 'utf8', (err, data) => {
+    fs.readFile('./users.json', 'utf8', function (err, data) {
         if (err) throw err;
 
+        // var path = req.url.split( '/' );
         var users = JSON.parse(data);
         var _user = {};
 
+        // Ha nem kaptunk id-t.
         if (!req.params.id) {
             _user = users;
         } else {
-            for (k in users) {
-                if (users[k].id = req.params.id) {
+            for (var k in users) {
+                if (req.params.id == users[k].id) {
                     _user = users[k];
                 }
             }
         }
 
-        res.send(JSON.stringify(_user))
+        res.send(JSON.stringify(_user));
     });
 }
 
-
-app.get('/users/:id*?', (req, res, next) => {
+// Felhasználók beolvasása.
+app.get('/users/:id*?', function (req, res) {
     console.log(req.url);
     handleUsers(req, res);
-})
+});
 
-app.listen(port, () => console.log('Example app listening on port 3000!'))
+
+// Megadjuk hogy a szerver melyik portot figyelje.
+app.listen(port);
+
+console.log("Server running in localhost:" + port);

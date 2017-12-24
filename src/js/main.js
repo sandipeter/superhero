@@ -1,3 +1,3 @@
-jQuery.getJSON('/users.json', function (users) {
+jQuery.getJSON('users', function (users) {
     console.log('all users', users);
 });
