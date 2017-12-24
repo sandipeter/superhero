@@ -24,6 +24,8 @@ var staticDir = 'build';
 //egy express szerver példány létrehozása
 const app = express()
 
+//statikus fájlok
+app.use(express.static(staticDir))
 
 //Express use használata
 app.use(function (req, res, next) {
@@ -31,8 +33,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-//statikus fájlok
-app.use(express.static(staticDir))
 
 //definiáljuk a szerver működését
 app.get('/', (req, res, next) => {
@@ -44,7 +44,7 @@ app.get('/', (req, res, next) => {
 
 
 //egy felhasználót visszaadó fv
-function handleUsers(res, req) {
+function handleUsers(req, res) {
     fs.readFile("./users.json", 'utf8', (err, data) => {
         if (err) throw err;
 
@@ -66,9 +66,9 @@ function handleUsers(res, req) {
 }
 
 
-app.get('/users/:id', (req, res, next) => {
+app.get('/users/:id*?', (req, res, next) => {
     console.log(req.url);
-    handleUsers(res, req);
+    handleUsers(req, res);
 })
 
 app.listen(port, () => console.log('Example app listening on port 3000!'))
