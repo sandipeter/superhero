@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "name": "Jack",
+        "email": "dsfsd@gmail.com",
+        "phone": "06304444444",
+        "job": "writer"
+    },
+    {
+        "id": 2,
+        "name": "Jim",
+        "email": "dsssfsd@gmail.com",
+        "phone": "06304444444",
+        "job": "writer"
+    },
+    {
+        "id": 3,
+        "name": "Joe",
+        "email": "dsffsd@gmail.com",
+        "phone": "06304444444",
+        "job": "writer"
+    },
+    {
+        "id": 4,
+        "name": "Jil",
+        "email": "dssdfgfsd@gmail.com",
+        "phone": "06304444444",
+        "job": "writer"
+    }
+]

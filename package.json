@@ -1,0 +1,17 @@
+{
+  "name": "superhero",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "4.16.2",
+    "grunt": "",
+    "grunt-cli": "",
+    "grunt-contrib-watch": "",
+    "grunt-contrib-uglify": "",
+    "grunt-contrib-clean": "1.1.0",
+    "grunt-contrib-jshint": "1.1.0",
+    "grunt-contrib-copy": "1.0.0",
+    "grunt-contrib-imagemin": "2.0.1"
+  },
+  "description": "Teszt app",
+  "license": "MIT"
+}
