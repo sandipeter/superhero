@@ -1,6 +1,21 @@
 //szükséges csomagok beolvasása
 const express = require('express')
 const fs = require('fs');
+var itf = require('./my_modules/itf_module')
+
+
+//SAJÁT MODULE HASZNÁLATA
+/*var str = "hello nodejs"
+
+itf.tu(str, function (err, newStr) {
+    if (err) {
+        console.error(err);
+    } else {
+        console.log(newStr);
+    }
+});*/
+
+
 
 //globális változók
 var port = 3000;
@@ -9,17 +24,23 @@ var staticDir = 'build';
 //egy express szerver példány létrehozása
 const app = express()
 
+
+//Express use használata
+app.use(function (req, res, next) {
+    console.log('request.url: ',req.url);
+    next();
+});
+
 //statikus fájlok
 app.use(express.static(staticDir))
 
-
 //definiáljuk a szerver működését
-app.get('/', (req, res) => {
+app.get('/', (req, res, next) => {
     fs.readFile('./' + staticDir + '/index.html', 'utf8', (err, data) => {
         if (err) throw err;
         res.send(data);
-    })
-})
+    });
+});
 
 
 //egy felhasználót visszaadó fv
@@ -45,7 +66,7 @@ function handleUsers(res, req) {
 }
 
 
-app.get('/users/:id', (req, res) => {
+app.get('/users/:id', (req, res, next) => {
     console.log(req.url);
     handleUsers(res, req);
 })
