@@ -1,13 +1,31 @@
 //szükséges csomagok beolvasása
 const express = require('express')
 const fs = require('fs');
-var itf = require('./my_modules/itf_module')
+var mongoose = require('mongoose')
+mongoose.Promise = global.Promise;
+
+//var teszt_itf = require('./my_modules/itf_module')
+
+//kapcsolódás az adatbázishoz
+mongoose.connect('mongodb://localhost/test')
+  .then(() =>  console.log('connection succesful'))
+  .catch((err) => console.error(err));
+
+//itf tábla model.
+var itf = require('./models/itf')
+//ez a külön fájlban van - kapcsolat megadása
+itf.setConnection(mongoose);
+itf.read({}, function(data){
+	console.log(data);
+});
+
+
 
 
 //SAJÁT MODULE HASZNÁLATA
 /*var str = "hello nodejs"
 
-itf.tu(str, function (err, newStr) {
+teszt_itf.tu(str, function (err, newStr) {
     if (err) {
         console.error(err);
     } else {
