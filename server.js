@@ -31,48 +31,62 @@ app.set('views', './src/view')
 app.use(express.static(staticDir));
 
 app.use(function (req, res, next) {
-    if (req.headers['x-requested-with'] == 'XMLHttpRequest') {
-        console.log("Ajax kérés");
-        res.send(JSON.stringify({'hello': 'world'}));
-    } else {
-        next();
-    }
+	if (req.headers['x-requested-with'] == 'XMLHttpRequest') {
+		console.log("Ajax kérés");
+		res.send(JSON.stringify({
+			'hello': 'world'
+		}));
+	} else {
+		next();
+	}
 
 });
 
 
 app.get('/', function (req, res) {
-  res.render('index', { title: 'Hey', message: 'Hello there!' })
+	handleUsers(req, res, false, function (allUsers) {
+		res.render('index', {
+			title: 'Hey',
+			message: 'Hello there!',
+			users: allUsers
+		})
+	});
 })
 
 // Falhasználó modell.
-function handleUsers(req, res) {
-    fs.readFile('./users.json', 'utf8', function (err, data) {
-        if (err) throw err;
+function handleUsers(req, res, next, callBack) {
+	fs.readFile('./users.json', 'utf8', function (err, data) {
+		if (err) throw err;
 
-        // var path = req.url.split( '/' );
-        var users = JSON.parse(data);
-        var _user = {};
+		// var path = req.url.split( '/' );
+		var users = JSON.parse(data);
 
-        // Ha nem kaptunk id-t.
-        if (!req.params.id) {
-            _user = users;
-        } else {
-            for (var k in users) {
-                if (req.params.id == users[k].id) {
-                    _user = users[k];
-                }
-            }
-        }
+		if (callBack) {
+			callBack(users);
+			return;
+		};
 
-        res.send(JSON.stringify(_user));
-    });
+		var _user = {};
+
+		// Ha nem kaptunk id-t.
+		if (!req.params.id) {
+			_user = users;
+		} else {
+			for (var k in users) {
+				if (req.params.id == users[k].id) {
+					_user = users[k];
+				}
+			}
+		}
+
+		res.send(JSON.stringify(_user));
+	});
 }
 
 // Felhasználók beolvasása.
 app.get('/users/:id*?', function (req, res) {
-    console.log(req.url);
-    handleUsers(req, res);
+	console.log(req.url);
+	handleUsers(req, res);
 });
 
 
