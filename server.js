@@ -7,18 +7,50 @@ mongoose.Promise = global.Promise;
 //var teszt_itf = require('./my_modules/itf_module')
 
 //kapcsolódás az adatbázishoz
-mongoose.connect('mongodb://localhost/test')
-  .then(() =>  console.log('connection succesful'))
-  .catch((err) => console.error(err));
+mongoose.connect('mongodb://localhost/superhero')
+	.then(() => console.log('connection succesful'))
+	.catch((err) => console.error(err));
 
 //itf tábla model.
-var itf = require('./models/itf')
+var Users = require('./models/users')
+
+
+
 //ez a külön fájlban van - kapcsolat megadása
-itf.setConnection(mongoose);
-itf.read({}, function(data){
-	console.log(data);
+//Users.setConnection(mongoose);
+
+/*Users.create({
+
+	name: 'john Doe',
+	email: 'johndoe@gmail.com',
+	phone: '+3612345678',
+	address: '1122 Budapest, Kis u. 10.',
+	role: 3,
+	meta: {
+		birthsday: new Date('1994-07-04'),
+		hobby: 'golf'
+	}
+}, function(data){
+  console.info('Saved model: ', data);
+});*/
+
+
+Users.read({}, function (users) {
+	console.info(users);
 });
 
+Users.first({name: new RegExp('doe','gi')}, function (users) {
+	if(users !==null){
+		console.info(users.name);
+	}else{
+		console.info('no user');
+	}
+});
+
+Users.model.isAdmin(2,function(err, data){
+	console.log(err);
+	console.log(data);
+});
 
 
 
