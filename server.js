@@ -1,10 +1,10 @@
 //szükséges csomagok beolvasása
 const express = require('express')
 const fs = require('fs');
+
 var mongoose = require('mongoose')
 mongoose.Promise = global.Promise;
 
-//var teszt_itf = require('./my_modules/itf_module')
 
 //kapcsolódás az adatbázishoz
 mongoose.connect('mongodb://localhost/superhero')
@@ -12,58 +12,90 @@ mongoose.connect('mongodb://localhost/superhero')
 	.catch((err) => console.error(err));
 
 //itf tábla model.
-var Users = require('./models/users')
+var Models = require('./models/models')
 
 
+/*
+Models.userCreate({
 
-//ez a külön fájlban van - kapcsolat megadása
-//Users.setConnection(mongoose);
-
-/*Users.create({
-
-	name: 'john Doe',
-	email: 'johndoe@gmail.com',
+	name: 'jaill',
+	email: 'jack@gmail.com',
 	phone: '+3612345678',
 	address: '1122 Budapest, Kis u. 10.',
 	role: 3,
 	meta: {
 		birthsday: new Date('1994-07-04'),
 		hobby: 'golf'
-	}
+	},
+	_orders: []
 }, function(data){
   console.info('Saved model: ', data);
-});*/
+});
+*/
 
 
-Users.read({}, function (users) {
+
+//GER
+Models.userRead({}, function (users) {
 	console.info(users);
 });
 
-Users.first({name: new RegExp('doe','gi')}, function (users) {
-	if(users !==null){
-		console.info(users.name);
+/*Models.userModel.remove({'name': new RegExp('jack', 'i')}, function(err, romoved){
+	if (err){
+		console.error(err);
 	}else{
+		//console.log('removed: ', romoved)
+	};
+});*/
+
+//UPDATE
+/*Models.userModel.update({name: new RegExp('doe', 'gi')}, {name: 'jason borne'},function(err,user){
+	if(err){
+		console.error(err);
+	}else{
+		console.log(user);
+	};
+});*/
+
+//GET ONE
+Models.userFirst({
+	name: new RegExp('doe', 'gi')
+}, function (users) {
+	if (users !== null) {
+		console.info(users.name);
+	} else {
 		console.info('no user');
 	}
 });
 
-Users.model.isAdmin(2,function(err, data){
+//GET ADMINS
+/*Models.userModel.isAdmin(2, function (err, data) {
 	console.log(err);
 	console.log(data);
+});*/
+
+
+
+
+
+//rendelés mentése adott userhez
+Models.userFirst({name: new RegExp('jaill', 'i')}, function (user) {
+	if (user !== null) {
+		Models.orderCreate({
+			_user: user._id,
+			insDate: new Date(),
+			description: 'Az első vásárlás',
+			product: 'Vasaló',
+			amount: 9900,
+			deadline: new Date('2018.01.01')}, function(data){
+			console.log('USERRRR: ', data);
+		});
+	} else {
+		console.info('no user');
+	}
 });
 
 
-
-//SAJÁT MODULE HASZNÁLATA
-/*var str = "hello nodejs"
-
-teszt_itf.tu(str, function (err, newStr) {
-    if (err) {
-        console.error(err);
-    } else {
-        console.log(newStr);
-    }
-});*/
 
 
 
