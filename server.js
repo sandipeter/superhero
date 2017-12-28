@@ -35,7 +35,7 @@ Models.userCreate({
 
 
 
-//GER
+//GET AL
 Models.userRead({}, function (users) {
 	console.info(users);
 });
@@ -112,12 +112,15 @@ app.set('views', './src/view')
 // Statikus fájlok.
 app.use(express.static(staticDir));
 
+
+
 app.use(function (req, res, next) {
 	if (req.headers['x-requested-with'] == 'XMLHttpRequest') {
-		console.log("Ajax kérés");
-		res.send(JSON.stringify({
-			'hello': 'world'
-		}));
+
+		Models.userRead({}, function (users) {
+			res.send(users);
+		});
+
 	} else {
 		next();
 	}

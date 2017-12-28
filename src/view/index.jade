@@ -2,7 +2,7 @@ extends ./layout.jade
 
 block content
   .container
-    .starter-template
+    .starter-div
       h1= title
       .row(data-ng-controller='priceController')
         .col-xs-3
@@ -12,11 +12,15 @@ block content
           p Más ára: {{calcOtherPrice(yourPrice) | currencyFilter}}
           p Teljes ár: {{yourPrice | currencyFilter}}
       .row(data-ng-controller='userController')
-        .col-xs-3
+        .col-xs-12
           p {{yourPrice}}
-
-
-
-      ul
-        each user in users
-          li #{user.id}: #{user.name} - #{user.email}
+          table(class='table table-condensed')
+            thead
+              tr
+                th(data-ng-repeat='th in ths') {{th}}
+            tbody
+              tr(data-ng-repeat='row in users')
+                td {{row._id}}
+                td {{row.name}}
+                td {{row.email}}
+                td {{row.phone}}

@@ -17,11 +17,4 @@ superhero.controller( "priceController",[ "$scope", "$http", function( $scope, $
 			var newPrice = Math.round(parseInt(price)*0.85);
 			return isNaN(newPrice) ? 0: newPrice;
 		};
-
-		//felhasználók lekérése
-		$http.get('/users').then(function(data){
-			console.log(data);
-		}, function(){
-			console.log("error");
-		});
 }]);
