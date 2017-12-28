@@ -58,7 +58,7 @@ Models.userRead({}, function (users) {
 });*/
 
 //GET ONE
-Models.userFirst({
+/*Models.userFirst({
 	name: new RegExp('doe', 'gi')
 }, function (users) {
 	if (users !== null) {
@@ -66,7 +66,7 @@ Models.userFirst({
 	} else {
 		console.info('no user');
 	}
-});
+});*/
 
 //GET ADMINS
 /*Models.userModel.isAdmin(2, function (err, data) {
@@ -79,7 +79,7 @@ Models.userFirst({
 
 
 //rendelés mentése adott userhez
-Models.userFirst({name: new RegExp('jaill', 'i')}, function (user) {
+/*Models.userFirst({name: new RegExp('jaill', 'i')}, function (user) {
 	if (user !== null) {
 		Models.orderCreate({
 			_user: user._id,
@@ -93,7 +93,7 @@ Models.userFirst({name: new RegExp('jaill', 'i')}, function (user) {
 	} else {
 		console.info('no user');
 	}
-});
+});*/
 
 
 

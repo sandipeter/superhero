@@ -11,7 +11,9 @@ module.exports = function (grunt) {
 				src: ['src/vendor/jquery/dist/jquery.min.js',
 					  'src/vendor/bootstrap/dist/js/bootstrap.min.js',
 					  'src/vendor/angular/angular.min.js',
-					  'src/js/*.js'],
+					  'src/vendor/angular-currency-filter/currencyModule.js',
+					  'src/js/main.js',
+					  'src/js/controllers/*.js'],
 				dest: 'build/js/all.js'
 			}
 		},
@@ -56,7 +58,8 @@ module.exports = function (grunt) {
 					"jQuery": true,
 					"console": true,
 					"module": true,
-					"$": true
+					"$": true,
+					"angular": true
 				}
 			},
 			all: ['Gruntfile.js', 'src/js/*.js']

@@ -1,8 +1,7 @@
 - var classes = ['main', 'large', 'no-padding'];
-- var atts = {'data-ng-change': 'runChangeMethod()'};
 
 doctype html
-html(lang='')
+html
   head
     meta(charset='UTF-8')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
@@ -13,7 +12,7 @@ html(lang='')
     link(rel='stylesheet', href='css/all.min.css')
     style.
       body{padding-top:50px;}.starter-template{padding:40px 15px;text-align:center;}
-  body
+  body(data-ng-app='superhero')
 
     include ./menu.jade
 
